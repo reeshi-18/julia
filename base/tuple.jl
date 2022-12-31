@@ -82,6 +82,14 @@ function _maxlength(t::Tuple, t2::Tuple, t3::Tuple...)
     @inline
     max(length(t), _maxlength(t2, t3...))
 end
+function _minlength(t::Tuple, t2::Tuple, t3::Tuple...)
+    @inline
+    min(length(t), _minlength(t2, t3...))
+end
+function eachindex(t::Tuple, t2::Tuple...)
+    @inline
+    OneTo(_minlength(t, t2...))
+end
 
 # this allows partial evaluation of bounded sequences of next() calls on tuples,
 # while reducing to plain next() for arbitrary iterables.
